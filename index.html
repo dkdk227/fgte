@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roma</title>
+<style>
+:root {
+  --dark-bg: #0f1a0f;
+  --dark-card: #1c2a1c;
+  --green1: #2ecc71;
+  --green2: #27ae60;
+  --text-light: #d6f5d6;
+  --shadow: rgba(0,0,0,0.4);
+}
+
+/* Общие стили */
+body {
+  margin:0;
+  padding:0;
+  font-family:'Franklin Gothic Medium','Arial Narrow',Arial,sans-serif;
+  background: linear-gradient(135deg, var(--dark-bg), #101f10);
+  color: var(--text-light);
+  overflow-x:hidden;
+}
+
+/* Плавающие элементы */
+.blob {
+  position: fixed;
+  border-radius: 50%;
+  opacity: 0.4;
+  mix-blend-mode: screen;
+  filter: blur(70px);
+  animation: float 15s ease-in-out infinite;
+  z-index:0;
+}
+.blob.b1 { width: 350px; height: 350px; top:-80px; left:-80px; background: var(--green2);}
+.blob.b2 { width: 300px; height: 300px; bottom:-100px; right:-100px; background: var(--green1); animation-duration:18s;}
+.blob.b3 { width: 250px; height: 250px; top:30%; right:20%; background: #1abc9c; animation-duration:20s;}
+@keyframes float {
+  0%,100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-20px) scale(1.02); }
+}
+
+/* Header */
+header {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background: rgba(28,42,28,0.85);
+  height: 60px;
+  position: sticky;
+  top:0;
+  z-index:5;
+  box-shadow: 0 4px 20px var(--shadow);
+  backdrop-filter: blur(6px);
+}
+header h1 {
+  color: var(--green1);
+  font-size: 32px;
+  text-shadow: 0 0 6px rgba(46,204,113,0.4);
+}
+
+/* Навигация */
+.fg {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px;
+  background: rgba(28,42,28,0.85);
+  padding:10px;
+  position: sticky;
+  top:60px;
+  z-index:4;
+  border-radius:8px;
+}
+.fg p {
+  text-decoration:none;
+  background-color: var(--dark-card);
+  padding: 10px 20px;
+  border-radius:12px;
+  color: var(--text-light);
+  transition: 0.3s ease;
+  cursor:pointer;
+  box-shadow: 0 0 8px rgba(46,204,113,0.3);
+}
+.fg p:hover {
+  background: var(--green2);
+  color: var(--dark-bg);
+  box-shadow:0 0 12px rgba(46,204,113,0.6);
+}
+
+/* Секции */
+.dev {
+  display:flex;
+  justify-content:center;
+  font-size:28px;
+  margin-top:25px;
+  text-shadow:0 0 6px rgba(46,204,113,0.4);
+}
+section {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:flex-start;
+  gap:25px;
+  padding:25px;
+  position:relative;
+  z-index:2;
+}
+section img {
+  max-width:300px;
+  width:100%;
+  border-radius:20px;
+  border:2px solid var(--green1);
+  box-shadow:0 0 20px rgba(46,204,113,0.3);
+}
+.content {
+  background: linear-gradient(145deg, rgba(28,42,28,0.85), rgba(28,42,28,0.7));
+  border-radius:20px;
+  padding:25px;
+  max-width:500px;
+  flex:1;
+  border:1px solid var(--green2);
+  box-shadow:0 0 24px rgba(46,204,113,0.3), 0 0 40px rgba(39,174,96,0.2);
+}
+.content.dark {
+  background: linear-gradient(145deg, rgba(20,30,20,0.85), rgba(20,30,20,0.7));
+}
+.content .odin {
+  font-size:20px;
+  margin-bottom:12px;
+  text-align:center;
+  text-shadow:0 0 6px rgba(46,204,113,0.4);
+}
+.content .text { font-size:16px; line-height:1.5; }
+
+/* Footer */
+footer {
+  background: rgba(28,42,28,0.85);
+  color: var(--green1);
+  text-align:center;
+  padding:15px 0;
+  box-shadow:0 0 16px rgba(46,204,113,0.4);
+  margin-top:20px;
+  border-radius:8px;
+}
+
+/* Адаптивность */
+@media(max-width:768px){
+  header h1{font-size:28px;}
+  .fg{flex-direction:column;align-items:center;}
+  .fg p{width:90%; text-align:center;}
+  section{flex-direction:column;align-items:center;}
+  .content{width:90%;}
+  section img{max-width:90%;}
+  .dev{font-size:24px;}
+}
+</style>
+</head>
+<body>
+
+<div class="blob b1"></div>
+<div class="blob b2"></div>
+<div class="blob b3"></div>
+
+<header>
+  <h1>РОМА</h1>
+</header>
+
+<div class="fg">
+  <p onclick="scrollToDiv('bio')">БИОГРАФИЯ</p>
+  <p onclick="scrollToDiv('int')">ИНТЕРЕСЫ</p>
+  <p onclick="scrollToDiv('auth')">АВТОР САЙТА</p>
+  <p onclick="scrollToDiv('cont')">КОНТАКТЫ</p>
+</div>
+
+<div id="bio" class="dev"><h2>БИОГРАФИЯ</h2></div>
+<section>
+  <img src="roma.jpg" alt="Рома">
+  <div class="content">
+    <p class="odin">Рома или как некоторые называют - "ослоёб"</p>
+    <p class="text">Рома - легенда, ему 16 лет, проживает в стране Словакия, и он крутой тип. Он находится в крутом чате "Одмен чата умир" и принимает там активное участие!!! Он слегка туповат но одновременно и умный. Раньше он жил сам в общаге, но сейчас он снимает квартиру и живёт в кайф. Был в Египте и других странах. Как друг он 6/10 — прикольный.</p>
+  </div>
+</section>
+
+<div id="int" class="dev"><h2>ИНТЕРЕСЫ</h2></div>
+<section>
+  <img src="samokat.jpg" alt="Самокат">
+  <div class="content dark">
+    <p class="odin">Интересы у Романа очень крутые</p>
+    <p class="text">Ему нравится кататься на его крутом самокате. Любит общаться с нами в чатике. Недавно из-за другого чела (Coolfire) у Романа появился интерес делать ставки. Ещё он работает в сфере грузоперевозок и ему нравится. А раньше искал общение через дайвинчик, но перестал, потому что там одни странные люди.</p>
+  </div>
+</section>
+
+<div id="auth" class="dev"><h2>АВТОР САЙТА</h2></div>
+<section>
+  <img src="matvey.jpg" alt="Матвей">
+  <div class="content">
+    <p class="odin">Матвей</p>
+    <p class="text">Самый крутой программист, который создал этот замечательный сайт.</p>
+  </div>
+</section>
+
+<div id="cont" class="dev"><h2>КОНТАКТЫ</h2></div>
+<section>
+  <div class="content dark">
+    <p class="odin">ГДЕ НАЙТИ РОМАНА?</p>
+    <p class="text">Телеграм: <b>@fovinventor</b><br>Пишите! Он с радостью ответит.</p>
+    <img src="image.png" alt="Telegram QR">
+  </div>
+</section>
+
+<footer>&copy; 2025 Roma</footer>
+
+<script>
+function scrollToDiv(id){
+  document.getElementById(id).scrollIntoView({behavior:'smooth'});
+}
+const blobs = document.querySelectorAll('.blob');
+window.addEventListener('scroll', () => {
+  const scroll = window.scrollY;
+  blobs.forEach((b,i)=>{
+    b.style.transform = `translateY(${Math.sin((scroll/200)+i)*20}px)`;
+  });
+});
+</script>
+
+</body>
+</html>
