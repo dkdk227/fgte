@@ -22,24 +22,7 @@ body {
   background: linear-gradient(135deg, var(--dark-bg), #101f10);
   color: var(--text-light);
   overflow-x:hidden;
-}
-
-/* Плавающие элементы */
-.blob {
-  position: fixed;
-  border-radius: 50%;
-  opacity: 0.4;
-  mix-blend-mode: screen;
-  filter: blur(70px);
-  animation: float 15s ease-in-out infinite;
-  z-index:0;
-}
-.blob.b1 { width: 350px; height: 350px; top:-80px; left:-80px; background: var(--green2);}
-.blob.b2 { width: 300px; height: 300px; bottom:-100px; right:-100px; background: var(--green1); animation-duration:18s;}
-.blob.b3 { width: 250px; height: 250px; top:30%; right:20%; background: #1abc9c; animation-duration:20s;}
-@keyframes float {
-  0%,100% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-20px) scale(1.02); }
+  scroll-behavior: smooth;
 }
 
 /* Header */
@@ -69,12 +52,10 @@ header h1 {
   gap:10px;
   background: rgba(28,42,28,0.85);
   padding:10px;
-  position: sticky;
-  top:60px;
   z-index:4;
   border-radius:8px;
 }
-.fg p {
+.fg button {
   text-decoration:none;
   background-color: var(--dark-card);
   padding: 10px 20px;
@@ -83,57 +64,91 @@ header h1 {
   transition: 0.3s ease;
   cursor:pointer;
   box-shadow: 0 0 8px rgba(46,204,113,0.3);
+  border:none;
+  font-size:16px;
 }
-.fg p:hover {
+.fg button:hover {
   background: var(--green2);
   color: var(--dark-bg);
   box-shadow:0 0 12px rgba(46,204,113,0.6);
 }
 
-/* Секции */
-.dev {
-  display:flex;
-  justify-content:center;
-  font-size:28px;
-  margin-top:25px;
-  text-shadow:0 0 6px rgba(46,204,113,0.4);
+/* Аккордеон */
+.accordion {
+  width: 90%;
+  max-width: 800px;
+  margin: 20px auto;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 0 24px rgba(46,204,113,0.2);
 }
-section {
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  align-items:flex-start;
-  gap:25px;
-  padding:25px;
-  position:relative;
-  z-index:2;
+.accordion-item {
+  background: var(--dark-card);
+  margin-bottom:5px;
+  border-radius:12px;
+  overflow:hidden;
 }
-section img {
-  max-width:300px;
-  width:100%;
-  border-radius:20px;
-  border:2px solid var(--green1);
-  box-shadow:0 0 20px rgba(46,204,113,0.3);
+.accordion-header {
+  padding:15px 20px;
+  cursor:pointer;
+  font-weight:bold;
+  color: var(--green1);
+  position: relative;
+  user-select:none;
 }
-.content {
-  background: linear-gradient(145deg, rgba(28,42,28,0.85), rgba(28,42,28,0.7));
-  border-radius:20px;
-  padding:25px;
-  max-width:500px;
-  flex:1;
-  border:1px solid var(--green2);
-  box-shadow:0 0 24px rgba(46,204,113,0.3), 0 0 40px rgba(39,174,96,0.2);
-}
-.content.dark {
-  background: linear-gradient(145deg, rgba(20,30,20,0.85), rgba(20,30,20,0.7));
-}
-.content .odin {
+.accordion-header::after {
+  content: '+';
+  position:absolute;
+  right:20px;
   font-size:20px;
-  margin-bottom:12px;
-  text-align:center;
-  text-shadow:0 0 6px rgba(46,204,113,0.4);
+  transition: transform 0.3s;
 }
-.content .text { font-size:16px; line-height:1.5; }
+.accordion-header.active::after {
+  content: '-';
+}
+.accordion-body {
+  max-height:0;
+  overflow:hidden;
+  transition: max-height 0.4s ease, padding 0.4s ease;
+  padding:0 20px;
+}
+.accordion-body p {
+  margin:10px 0;
+  line-height:1.5;
+  font-size:16px;
+}
+
+/* Секции с изображениями */
+.accordion-body img {
+  width:100%;
+  max-width:300px;
+  border-radius:12px;
+  display:block;
+  margin:10px auto;
+  border:1px solid var(--green1);
+  box-shadow:0 0 16px rgba(46,204,113,0.2);
+}
+
+/* Кнопка наверх */
+#topBtn {
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background: var(--green1);
+  color: var(--dark-bg);
+  border:none;
+  border-radius:50%;
+  width:50px;
+  height:50px;
+  cursor:pointer;
+  font-size:24px;
+  box-shadow:0 0 12px rgba(46,204,113,0.4);
+  display:none;
+  z-index:10;
+}
+#topBtn:hover {
+  background: var(--green2);
+}
 
 /* Footer */
 footer {
@@ -146,15 +161,29 @@ footer {
   border-radius:8px;
 }
 
-/* Адаптивность */
+/* Плавающие элементы */
+.blob {
+  position: fixed;
+  border-radius: 50%;
+  opacity: 0.4;
+  mix-blend-mode: screen;
+  filter: blur(70px);
+  animation: float 15s ease-in-out infinite;
+  z-index:0;
+}
+.blob.b1 { width: 350px; height: 350px; top:-80px; left:-80px; background: var(--green2);}
+.blob.b2 { width: 300px; height: 300px; bottom:-100px; right:-100px; background: var(--green1); animation-duration:18s;}
+.blob.b3 { width: 250px; height: 250px; top:30%; right:20%; background: #1abc9c; animation-duration:20s;}
+@keyframes float {
+  0%,100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-20px) scale(1.02); }
+}
+
+/* Мобильная адаптация */
 @media(max-width:768px){
   header h1{font-size:28px;}
   .fg{flex-direction:column;align-items:center;}
-  .fg p{width:90%; text-align:center;}
-  section{flex-direction:column;align-items:center;}
-  .content{width:90%;}
-  section img{max-width:90%;}
-  .dev{font-size:24px;}
+  .fg button{width:90%; text-align:center;}
 }
 </style>
 </head>
@@ -169,61 +198,90 @@ footer {
 </header>
 
 <div class="fg">
-  <p onclick="scrollToDiv('bio')">БИОГРАФИЯ</p>
-  <p onclick="scrollToDiv('int')">ИНТЕРЕСЫ</p>
-  <p onclick="scrollToDiv('auth')">АВТОР САЙТА</p>
-  <p onclick="scrollToDiv('cont')">КОНТАКТЫ</p>
+  <button data-target="bio">БИОГРАФИЯ</button>
+  <button data-target="int">ИНТЕРЕСЫ</button>
+  <button data-target="auth">АВТОР САЙТА</button>
+  <button data-target="cont">КОНТАКТЫ</button>
 </div>
 
-<div id="bio" class="dev"><h2>БИОГРАФИЯ</h2></div>
-<section>
-  <img src="roma.jpg" alt="Рома">
-  <div class="content">
-    <p class="odin">Рома или как некоторые называют - "ослоёб"</p>
-    <p class="text">Рома - легенда, ему 16 лет, проживает в стране Словакия, и он крутой тип. Он находится в крутом чате "Одмен чата умир" и принимает там активное участие!!! Он слегка туповат но одновременно и умный. Раньше он жил сам в общаге, но сейчас он снимает квартиру и живёт в кайф. Был в Египте и других странах. Как друг он 6/10 — прикольный.</p>
-  </div>
-</section>
+<div class="accordion">
 
-<div id="int" class="dev"><h2>ИНТЕРЕСЫ</h2></div>
-<section>
-  <img src="samokat.jpg" alt="Самокат">
-  <div class="content dark">
-    <p class="odin">Интересы у Романа очень крутые</p>
-    <p class="text">Ему нравится кататься на его крутом самокате. Любит общаться с нами в чатике. Недавно из-за другого чела (Coolfire) у Романа появился интерес делать ставки. Ещё он работает в сфере грузоперевозок и ему нравится. А раньше искал общение через дайвинчик, но перестал, потому что там одни странные люди.</p>
+  <div class="accordion-item" id="bio">
+    <div class="accordion-header">БИОГРАФИЯ</div>
+    <div class="accordion-body">
+      <img src="roma.jpg" alt="Рома">
+      <p>Рома или как некоторые называют - "ослоёб"</p>
+      <p>Рома - легенда, ему 16 лет, проживает в стране Словакия, и он крутой тип. Он находится в крутом чате "Одмен чата умир" и принимает там активное участие!!! Он слегка туповат но одновременно и умный. Раньше он жил сам в общаге, но сейчас он снимает квартиру и живёт в кайф. Был в Египте и других странах. Как друг он 6/10 — прикольный.</p>
+    </div>
   </div>
-</section>
 
-<div id="auth" class="dev"><h2>АВТОР САЙТА</h2></div>
-<section>
-  <img src="matvey.jpg" alt="Матвей">
-  <div class="content">
-    <p class="odin">Матвей</p>
-    <p class="text">Самый крутой программист, который создал этот замечательный сайт.</p>
+  <div class="accordion-item" id="int">
+    <div class="accordion-header">ИНТЕРЕСЫ</div>
+    <div class="accordion-body">
+      <img src="samokat.jpg" alt="Самокат">
+      <p>Интересы у Романа очень крутые</p>
+      <p>Ему нравится кататься на его крутом самокате. Любит общаться с нами в чатике. Недавно из-за другого чела (Coolfire) у Романа появился интерес делать ставки. Ещё он работает в сфере грузоперевозок и ему нравится. А раньше искал общение через дайвинчик, но перестал, потому что там одни странные люди.</p>
+    </div>
   </div>
-</section>
 
-<div id="cont" class="dev"><h2>КОНТАКТЫ</h2></div>
-<section>
-  <div class="content dark">
-    <p class="odin">ГДЕ НАЙТИ РОМАНА?</p>
-    <p class="text">Телеграм: <b>@fovinventor</b><br>Пишите! Он с радостью ответит.</p>
-    <img src="image.png" alt="Telegram QR">
+  <div class="accordion-item" id="auth">
+    <div class="accordion-header">АВТОР САЙТА</div>
+    <div class="accordion-body">
+      <img src="matvey.jpg" alt="Матвей">
+      <p>Матвей</p>
+      <p>Самый крутой программист, который создал этот замечательный сайт.</p>
+    </div>
   </div>
-</section>
+
+  <div class="accordion-item" id="cont">
+    <div class="accordion-header">КОНТАКТЫ</div>
+    <div class="accordion-body">
+      <p>ГДЕ НАЙТИ РОМАНА?</p>
+      <p>Телеграм: <b>@fovinventor</b><br>Пишите! Он с радостью ответит.</p>
+      <img src="image.png" alt="Telegram QR">
+    </div>
+  </div>
+
+</div>
+
+<button id="topBtn">&#8679;</button>
 
 <footer>&copy; 2025 Roma</footer>
 
 <script>
-function scrollToDiv(id){
-  document.getElementById(id).scrollIntoView({behavior:'smooth'});
-}
-const blobs = document.querySelectorAll('.blob');
-window.addEventListener('scroll', () => {
-  const scroll = window.scrollY;
-  blobs.forEach((b,i)=>{
-    b.style.transform = `translateY(${Math.sin((scroll/200)+i)*20}px)`;
+// Аккордеон
+const headers = document.querySelectorAll('.accordion-header');
+headers.forEach(header=>{
+  header.addEventListener('click', ()=>{
+    header.classList.toggle('active');
+    const body = header.nextElementSibling;
+    if(body.style.maxHeight){
+      body.style.maxHeight = null;
+      body.style.padding = "0 20px";
+    } else{
+      body.style.maxHeight = body.scrollHeight + "px";
+      body.style.padding = "15px 20px";
+    }
   });
 });
+
+// Навигация к аккордеону
+document.querySelectorAll('.fg button').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const target = document.getElementById(btn.dataset.target);
+    const header = target.querySelector('.accordion-header');
+    header.classList.add('active');
+    const body = header.nextElementSibling;
+    body.style.maxHeight = body.scrollHeight + "px";
+    body.style.padding = "15px 20px";
+    window.scrollTo({top: target.offsetTop-60, behavior:'smooth'});
+  });
+});
+
+// Кнопка "Наверх"
+const topBtn = document.getElementById('topBtn');
+window.onscroll = ()=>{ topBtn.style.display = (document.body.scrollTop>100 || document.documentElement.scrollTop>100)? "block":"none"; };
+topBtn.onclick = ()=>{ window.scrollTo({top:0, behavior:'smooth'}); };
 </script>
 
 </body>
